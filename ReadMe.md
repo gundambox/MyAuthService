@@ -12,7 +12,7 @@ pip install -r requirements.txt
 
 ## Project structure
 
-This repository contains a Django + Django REST Framework project that implements an OAuth 2.0 authorization server.
+This repository contains a Django + Django REST Framework project scaffold for an OAuth 2.0 authorization server. OAuth 2.0 functionality is planned for future PRs.
 
 ```text
 .
