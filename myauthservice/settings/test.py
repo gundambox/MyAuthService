@@ -6,7 +6,8 @@ This configuration is optimized for running tests with an in-memory database.
 import os
 from .base import *
 
-# Enable debug mode for development
+# Enable debug mode during tests to provide detailed error messages and stack traces.
+# This helps diagnose test failures, but should not be used in production.
 DEBUG = True
 
 # Allow all hosts in development
