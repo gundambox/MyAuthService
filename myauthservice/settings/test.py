@@ -26,7 +26,13 @@ if 'SECRET_KEY' not in os.environ:
     raise Exception("SECRET_KEY environment variable not set")
 SECRET_KEY = os.environ['SECRET_KEY']
 
-# Console logging configuration for testing
+# Console logging configuration for testing.
+# 
+# By default, tests should run quietly to avoid cluttering test output.
+# However, verbose logging is enabled here to assist with debugging test failures
+# and to provide detailed information when diagnosing issues in CI environments.
+# If less verbosity is desired, consider switching the formatter to 'simple'
+# and raising the log level to 'WARNING' or higher.
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
