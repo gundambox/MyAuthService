@@ -46,11 +46,13 @@ Settings are split into modules under `myauthservice/settings/`:
 
 ### Run with specific settings
 
-```bash
-DJANGO_SETTINGS_MODULE=myauthservice.settings.dev python manage.py runserver
-DJANGO_SETTINGS_MODULE=myauthservice.settings.test python manage.py test
-```
+You can specify which settings module to use in two ways:
 
+1. **By setting the `DJANGO_SETTINGS_MODULE` environment variable (this overrides the default in `manage.py`):**
+
+   ```bash
+   DJANGO_SETTINGS_MODULE=myauthservice.settings.dev python manage.py runserver
+   DJANGO_SETTINGS_MODULE=myauthservice.settings.test python manage.py test
 ## Logging
 
 * Development logging writes to console (stdout).
