@@ -11,7 +11,9 @@ from .base import *
 DEBUG = False
 
 # Define allowed hosts for production
-ALLOWED_HOSTS = ['myauthdomain.com', 'www.myauthdomain.com']
+if 'ALLOWED_HOSTS' not in os.environ:
+    raise Exception("ALLOWED_HOSTS environment variable not set")
+ALLOWED_HOSTS = [host.strip() for host in os.environ['ALLOWED_HOSTS'].split(',') if host.strip()]
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
