@@ -74,6 +74,14 @@ You can specify which settings module to use in two ways:
    # Run tests with test settings
    DJANGO_SETTINGS_MODULE=myauthservice.settings.test python manage.py test
 
+2. **By using the `--settings` command-line option with `manage.py` commands:**
+
+   ```bash
+   # Run server with dev settings
+   python manage.py runserver --settings=myauthservice.settings.dev
+
+   # Run tests with test settings
+   python manage.py test --settings=myauthservice.settings.test
 ## Logging
 
 * Development logging writes to console (stdout).
