@@ -68,7 +68,7 @@ This repository contains a Django + Django REST Framework project scaffold for a
 │   ├── __init__.py
 │   ├── asgi.py
 │   ├── settings
-│   │   ├──  __init__.py
+│   │   ├── __init__.py
 │   │   ├── base.py         # common settings
 │   │   ├── dev.py          # development settings
 │   │   ├── prod.py         # production settings
