@@ -14,7 +14,8 @@ DEBUG = False
 if 'ALLOWED_HOSTS' not in os.environ:
     raise Exception("ALLOWED_HOSTS environment variable not set")
 ALLOWED_HOSTS = [host.strip() for host in os.environ['ALLOWED_HOSTS'].split(',') if host.strip()]
-
+if not ALLOWED_HOSTS:
+    raise Exception("ALLOWED_HOSTS environment variable must contain at least one valid host")
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 DATABASES = {
