@@ -21,7 +21,7 @@ setup: $(VENV) install migrate
 $(VENV):
 	$(PY) -m venv $(VENV)
 
-install:
+install: $(VENV)
 	$(PIP) install -r requirements.txt
 
 migrate:
