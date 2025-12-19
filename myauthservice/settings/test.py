@@ -3,8 +3,25 @@ Testing settings for MyAuthService project.
 This configuration is optimized for running tests with an in-memory database.
 """
 
+import copy
 import os
-from .base import *
+
+from .base import (
+    AUTH_PASSWORD_VALIDATORS,
+    BASE_DIR,
+    DEFAULT_AUTO_FIELD,
+    INSTALLED_APPS,
+    LANGUAGE_CODE,
+    LOGGING as BASE_LOGGING,
+    MIDDLEWARE,
+    ROOT_URLCONF,
+    STATIC_URL,
+    TEMPLATES,
+    TIME_ZONE,
+    USE_I18N,
+    USE_TZ,
+    WSGI_APPLICATION,
+)
 
 # Enable debug mode during tests to provide detailed error messages and stack traces.
 # This helps diagnose test failures, but should not be used in production.
@@ -31,39 +48,9 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # and to provide detailed information when diagnosing issues in CI environments.
 # If less verbosity is desired, consider switching the formatter to 'simple'
 # and raising the log level to 'WARNING' or higher.
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '[{asctime}][{levelname}][{process:d}][{thread:d}][{filename}:{lineno}] - {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '[{levelname}] {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'INFO',
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.environ.get('DJANGO_LOG_LEVEL', 'INFO'),
-            'propagate': False,
-        },
-        'oauth2': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
+LOGGING = copy.deepcopy(BASE_LOGGING)
+LOGGING['loggers']['oauth2'] = {
+    'handlers': ['console'],
+    'level': 'DEBUG',
+    'propagate': False,
 }

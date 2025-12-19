@@ -4,8 +4,23 @@ This configuration is optimized for deployment in a production environment with 
 """
 
 import os
-from .base import *
 
+from .base import (
+    AUTH_PASSWORD_VALIDATORS,
+    BASE_DIR,
+    DEFAULT_AUTO_FIELD,
+    INSTALLED_APPS,
+    LANGUAGE_CODE,
+    LOGGING as BASE_LOGGING,
+    MIDDLEWARE,
+    ROOT_URLCONF,
+    STATIC_URL,
+    TEMPLATES,
+    TIME_ZONE,
+    USE_I18N,
+    USE_TZ,
+    WSGI_APPLICATION,
+)
 
 # Disable debug mode for production
 DEBUG = False
@@ -16,8 +31,16 @@ if 'ALLOWED_HOSTS' not in os.environ:
 ALLOWED_HOSTS = [host.strip() for host in os.environ['ALLOWED_HOSTS'].split(',') if host.strip()]
 if not ALLOWED_HOSTS:
     raise Exception("ALLOWED_HOSTS environment variable must contain at least one valid host")
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+# Validate required database environment variables
+required_db_vars = ['PROD_DB_NAME', 'PROD_DB_USER', 'PROD_DB_PASSWORD', 'PROD_DB_HOST']
+missing_vars = [var for var in required_db_vars if var not in os.environ]
+if missing_vars:
+    raise Exception(f"Required database environment variables not set: {', '.join(missing_vars)}")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -31,37 +54,9 @@ DATABASES = {
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '[{asctime}][{levelname}][{process:d}][{thread:d}][{filename}:{lineno}] - {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '[{levelname}] {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'INFO',
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.environ.get('DJANGO_LOG_LEVEL', 'INFO'),
-            'propagate': False,
-        },
-    },
-}
+# Use base logging configuration
+# Production uses the same logging configuration as base
+LOGGING = BASE_LOGGING
 
 # Security settings for production
 SECURE_SSL_REDIRECT = True

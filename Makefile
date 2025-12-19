@@ -31,7 +31,7 @@ migrate: $(VENV) install
 	DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) $(PYTHON) manage.py migrate
 
 run: $(VENV) install migrate
-	DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) $(PYTHON) manage.py runserver 0.0.0.0:8000
+	DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) $(PYTHON) manage.py runserver 127.0.0.1:8000
 
 clean:
 	rm -rf $(VENV)

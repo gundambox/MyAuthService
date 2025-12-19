@@ -5,6 +5,8 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
+
+
 def main():
     """Run administrative tasks."""
     BASE_DIR = Path(__file__).resolve().parent
