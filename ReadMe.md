@@ -121,3 +121,42 @@ This repository contains a Django + Django REST Framework project scaffold for a
     ├── __init__.py
     └── test_smoke.py
 ```
+
+## API Endpoints
+
+The API is accessible under the `/api/` prefix.
+
+### Health Check
+
+Check if the service is running and healthy. 
+
+**Endpoint:** `GET /api/health`
+
+**Response:**
+```json
+{
+  "status": "ok"
+}
+```
+
+**Status Codes:**
+- `200 OK` - Service is healthy
+
+**Example:**
+```bash
+curl http://localhost:8000/api/health
+```
+
+### Version (Optional)
+
+Get service name and version information.
+
+**Endpoint:** `GET /api/version`
+
+**Response:**
+```json
+{
+  "service": "MyAuthService",
+  "version": "0.1.0"
+}
+```
