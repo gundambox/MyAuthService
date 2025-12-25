@@ -20,10 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Read version from VERSION file
 VERSION_FILE = BASE_DIR / "VERSION"
+DEFAULT_SERVICE_VERSION = "0.0.0"
 if VERSION_FILE.exists():
-    SERVICE_VERSION = VERSION_FILE.read_text().strip()
+    try:
+        SERVICE_VERSION = VERSION_FILE.read_text().strip()
+    except (OSError, UnicodeDecodeError):
+        SERVICE_VERSION = DEFAULT_SERVICE_VERSION
 else:
-    SERVICE_VERSION = "0.0.0"  # fallback if VERSION file is missing
+    SERVICE_VERSION = DEFAULT_SERVICE_VERSION  # fallback if VERSION file is missing
 
 if "SECRET_KEY" not in os.environ:
     raise ImproperlyConfigured("SECRET_KEY environment variable not set")
