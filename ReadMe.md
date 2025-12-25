@@ -163,7 +163,7 @@ The project follows semantic versioning (`major.minor.patch`):
 
 ### How It Works
 
-The version is read in Django settings (`myauthservice/settings/base. py`):
+The version is read in Django settings (`myauthservice/settings/base.py`):
 
 ```python
 # Read version from VERSION file
