@@ -2,3 +2,6 @@ Django
 djangorestframework
 mysqlclient
 python-dotenv
+flake8
+black
+pytest
