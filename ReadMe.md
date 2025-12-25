@@ -141,6 +141,48 @@ This repository contains a Django + Django REST Framework project scaffold for a
     └── test_smoke.py
 ```
 
+## Versioning
+
+The service version is controlled by a `VERSION` file at the project root. The version endpoint (`GET /api/version`) reads from this file.
+
+### Version Format
+
+The project follows semantic versioning (`major.minor.patch`):
+
+| Change Type | Version Update | Reset |
+|-------------|----------------|-------|
+| Breaking change / Delete feature | `major + 1` | `minor = 0`, `patch = 0` |
+| Add feature | `minor + 1` | `patch = 0` |
+| Documentation, chore, bug fix | `patch + 1` | - |
+
+### Examples
+
+- `0.1.0` → `1.0.0` (breaking change)
+- `0.1.0` → `0.2.0` (new feature)
+- `0.1.0` → `0.1.1` (bug fix or documentation)
+
+### How It Works
+
+The version is read in Django settings (`myauthservice/settings/base. py`):
+
+```python
+# Read version from VERSION file
+VERSION_FILE = BASE_DIR / 'VERSION'
+if VERSION_FILE. exists():
+    SERVICE_VERSION = VERSION_FILE.read_text().strip()
+else:
+    SERVICE_VERSION = '0.0.0'  # fallback if VERSION file is missing
+```
+
+The version endpoint returns:
+
+```json
+{
+  "service": "MyAuthService",
+  "version": "x.x.x"
+}
+```
+
 ## API Endpoints
 
 The API is accessible under the `/api/` prefix.
