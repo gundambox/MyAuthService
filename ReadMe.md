@@ -86,14 +86,9 @@ You can specify which settings module to use in two ways:
     ```
 
 ## Running Tests
-- To run unit tests:
+- To run tests:
   ```bash
-  pytest tests/unit
-  ```
-- To run integration tests:
-  ```bash
-  pytest tests/integration
-  ```
+  pytest tests/
 
 ## Linting and Formatting
 - To run lint checks:
