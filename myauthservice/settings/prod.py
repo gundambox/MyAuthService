@@ -26,33 +26,39 @@ from .base import (
 DEBUG = False
 
 # Define allowed hosts for production
-if 'ALLOWED_HOSTS' not in os.environ:
+if "ALLOWED_HOSTS" not in os.environ:
     raise Exception("ALLOWED_HOSTS environment variable not set")
-ALLOWED_HOSTS = [host.strip() for host in os.environ['ALLOWED_HOSTS'].split(',') if host.strip()]
+ALLOWED_HOSTS = [
+    host.strip() for host in os.environ["ALLOWED_HOSTS"].split(",") if host.strip()
+]
 if not ALLOWED_HOSTS:
-    raise Exception("ALLOWED_HOSTS environment variable must contain at least one valid host")
+    raise Exception(
+        "ALLOWED_HOSTS environment variable must contain at least one valid host"
+    )
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # Validate required database environment variables
-required_db_vars = ['PROD_DB_NAME', 'PROD_DB_USER', 'PROD_DB_PASSWORD', 'PROD_DB_HOST']
+required_db_vars = ["PROD_DB_NAME", "PROD_DB_USER", "PROD_DB_PASSWORD", "PROD_DB_HOST"]
 missing_vars = [var for var in required_db_vars if var not in os.environ]
 if missing_vars:
-    raise Exception(f"Required database environment variables not set: {', '.join(missing_vars)}")
+    raise Exception(
+        f"Required database environment variables not set: {', '.join(missing_vars)}"
+    )
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ['PROD_DB_NAME'],
-        'USER': os.environ['PROD_DB_USER'],
-        'PASSWORD': os.environ['PROD_DB_PASSWORD'],
-        'HOST': os.environ['PROD_DB_HOST'],
-        'PORT': os.environ.get('PROD_DB_PORT', '3306'),
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.environ["PROD_DB_NAME"],
+        "USER": os.environ["PROD_DB_USER"],
+        "PASSWORD": os.environ["PROD_DB_PASSWORD"],
+        "HOST": os.environ["PROD_DB_HOST"],
+        "PORT": os.environ.get("PROD_DB_PORT", "3306"),
     }
 }
 
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # Use base logging configuration
 # Production uses the same logging configuration as base
@@ -65,3 +71,30 @@ CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
+
+__all__ = [
+    "ALLOWED_HOSTS",
+    "AUTH_PASSWORD_VALIDATORS",
+    "BASE_DIR",
+    "CSRF_COOKIE_SECURE",
+    "DATABASES",
+    "DEBUG",
+    "DEFAULT_AUTO_FIELD",
+    "INSTALLED_APPS",
+    "LANGUAGE_CODE",
+    "LOGGING",
+    "MIDDLEWARE",
+    "ROOT_URLCONF",
+    "SECRET_KEY",
+    "SECURE_HSTS_INCLUDE_SUBDOMAINS",
+    "SECURE_HSTS_PRELOAD",
+    "SECURE_HSTS_SECONDS",
+    "SECURE_SSL_REDIRECT",
+    "SESSION_COOKIE_SECURE",
+    "STATIC_URL",
+    "TEMPLATES",
+    "TIME_ZONE",
+    "USE_I18N",
+    "USE_TZ",
+    "WSGI_APPLICATION",
+]
