@@ -2,12 +2,14 @@
 
 ## Introduction
 
-This project is a bootstrap/scaffolding setup for a Django authentication service using JWT (JSON Web Tokens). Endpoints for user registration, login, and token validation are planned but not yet implemented.
+This project is a bootstrap/scaffolding setup for a Django authentication service. It is primarily a personal side project built to learn OAuth 2.0 by implementing an OAuth 2.0 authorization server step by step, and to document the design decisions and trade-offs along the way.
+
+The repository currently focuses on establishing a solid development foundation (project structure, settings split, local workflow). OAuth 2.0 functionality and related endpoints will be introduced incrementally in future PRs.
 
 ## Requirements
 
-- Python 3.x
-- pip
+- Python 3.12+
+- [`pip`](https://pip.pypa.io/en/stable/) for dependency management
 - pkg-config
 - libmysqlclient-dev
 
@@ -67,21 +69,38 @@ You can specify which settings module to use in two ways:
 
 1. **By setting the `DJANGO_SETTINGS_MODULE` environment variable (this overrides the default in `manage.py`):**
 
-   ```bash
-   # Run server with dev settings
-   DJANGO_SETTINGS_MODULE=myauthservice.settings.dev python manage.py runserver
+    ```bash
+    # Run server with dev settings
+    DJANGO_SETTINGS_MODULE=myauthservice.settings.dev python manage.py runserver
 
-   # Run tests with test settings
-   DJANGO_SETTINGS_MODULE=myauthservice.settings.test python manage.py test
-
+    # Run tests with test settings
+    DJANGO_SETTINGS_MODULE=myauthservice.settings.test python manage.py test
+    ```
 2. **By using the `--settings` command-line option with `manage.py` commands:**
+    ```bash
+    # Run server with dev settings
+    python manage.py runserver --settings=myauthservice.settings.dev
 
-   ```bash
-   # Run server with dev settings
-   python manage.py runserver --settings=myauthservice.settings.dev
+    # Run tests with test settings
+    python manage.py test --settings=myauthservice.settings.test
+    ```
 
-   # Run tests with test settings
-   python manage.py test --settings=myauthservice.settings.test
+## Running Tests
+- To run tests:
+  ```bash
+  pytest tests/
+  ```
+
+## Linting and Formatting
+- To run lint checks:
+  ```bash
+  flake8 .
+  ```
+- To auto-format code:
+  ```bash
+  black .
+  ```
+
 ## Logging
 
 * Development logging writes to console (stdout).
@@ -128,7 +147,7 @@ The API is accessible under the `/api/` prefix.
 
 ### Health Check
 
-Check if the service is running and healthy. 
+Check if the service is running and healthy.
 
 **Endpoint:** `GET /api/health`
 
