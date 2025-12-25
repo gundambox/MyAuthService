@@ -54,3 +54,24 @@ LOGGING["loggers"]["oauth2"] = {
     "level": "DEBUG",
     "propagate": False,
 }
+
+__all__ = [
+    "ALLOWED_HOSTS",
+    "AUTH_PASSWORD_VALIDATORS",
+    "BASE_DIR",
+    "DATABASES",
+    "DEBUG",
+    "DEFAULT_AUTO_FIELD",
+    "INSTALLED_APPS",
+    "LANGUAGE_CODE",
+    "LOGGING",
+    "MIDDLEWARE",
+    "ROOT_URLCONF",
+    "SECRET_KEY",
+    "STATIC_URL",
+    "TEMPLATES",
+    "TIME_ZONE",
+    "USE_I18N",
+    "USE_TZ",
+    "WSGI_APPLICATION",
+]

@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version:  '3.x'  # Adjust to your project's Python version
+          python-version:  '3.12'  # Adjust to your project's Python version
 
       - name: Install dependencies
         run: |
@@ -24,10 +24,12 @@ jobs:
           pip install -r requirements.txt
 
       - name: Lint with flake8
-        run: flake8 . 
+        run: flake8 .
 
       - name: Check formatting with black
-        run: black .
+        run: black . --check
 
       - name: Run tests
-        run: pytest
+        env:
+          SECRET_KEY: test-secret-key-for-ci
+        run: pytest -v
