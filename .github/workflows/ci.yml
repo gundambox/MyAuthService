@@ -26,7 +26,7 @@ jobs:
       - name: Lint with flake8
         run: flake8 . 
 
-      - name:  Check formatting with black
+      - name: Check formatting with black
         run: black .
 
       - name: Run tests
