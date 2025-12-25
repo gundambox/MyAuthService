@@ -27,7 +27,7 @@ jobs:
         run: flake8 .
 
       - name: Check formatting with black
-        run: black .
+        run: black . --check
 
       - name: Run tests
         env:
