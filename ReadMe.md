@@ -168,7 +168,7 @@ The version is read in Django settings (`myauthservice/settings/base. py`):
 ```python
 # Read version from VERSION file
 VERSION_FILE = BASE_DIR / 'VERSION'
-if VERSION_FILE. exists():
+if VERSION_FILE.exists():
     SERVICE_VERSION = VERSION_FILE.read_text().strip()
 else:
     SERVICE_VERSION = '0.0.0'  # fallback if VERSION file is missing
