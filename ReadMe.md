@@ -187,37 +187,6 @@ The version endpoint returns:
 
 The API is accessible under the `/api/` prefix.
 
-### Health Check
+### API Documentation
 
-Check if the service is running and healthy.
-
-**Endpoint:** `GET /api/health`
-
-**Response:**
-```json
-{
-  "status": "ok"
-}
-```
-
-**Status Codes:**
-- `200 OK` - Service is healthy
-
-**Example:**
-```bash
-curl http://localhost:8000/api/health
-```
-
-### Version (Optional)
-
-Get service name and version information.
-
-**Endpoint:** `GET /api/version`
-
-**Response:**
-```json
-{
-  "service": "MyAuthService",
-  "version": "0.1.0"
-}
-```
+Explore the API docs in Swagger UI at **`/swagger`**. The raw OpenAPI schema is available at **`/schema`**, and it automatically includes existing endpoints like `/api/health` and `/api/version`.
