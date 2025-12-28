@@ -1,37 +1,41 @@
 SHELL := /bin/bash
-PY := python3
-VENV := .venv
-PIP := $(VENV)/bin/pip
-PYTHON := $(VENV)/bin/python
 
-DJANGO_SETTINGS_MODULE := myauthservice.settings.dev
+COMPOSE := docker compose
+SERVICE := app
 
-.PHONY: help dev setup install migrate run clean
+.PHONY: help up down down-v build logs shell migrate test
 
 help:
-	@echo "Targets:"
-	@echo "  make dev      - one command to start dev server"
-	@echo "  make setup    - create venv + install deps + migrate"
-	@echo "  make clean    - remove venv"
+	@echo "Docker Compose targets:"
+	@echo "  make up       - docker: up -d"
+	@echo "  make down     - docker: down"
+	@echo "  make down-v   - docker: down -v (reset volumes)"
+	@echo "  make build    - docker: build"
+	@echo "  make logs     - docker: logs -f"
+	@echo "  make shell    - docker: exec bash in $(SERVICE)"
+	@echo "  make migrate  - docker: run migrations"
+	@echo "  make test     - docker: run pytest with test settings"
 
-dev: setup run
+up:
+	$(COMPOSE) up -d
 
-setup:
-	$(MAKE) $(VENV)
-	$(MAKE) install
-	$(MAKE) migrate
+build:
+	$(COMPOSE) build
 
-$(VENV):
-	$(PY) -m venv $(VENV)
+down:
+	$(COMPOSE) down
 
-install: $(VENV)
-	$(PIP) install -r requirements.txt
+down-v:
+	$(COMPOSE) down -v
 
-migrate: $(VENV) install
-	DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) $(PYTHON) manage.py migrate
+logs: up
+	$(COMPOSE) logs -f $(SERVICE)
 
-run: $(VENV) install migrate
-	DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) $(PYTHON) manage.py runserver 127.0.0.1:8000
+shell: up
+	$(COMPOSE) exec $(SERVICE) bash
 
-clean:
-	rm -rf $(VENV)
+migrate:
+	$(COMPOSE) exec $(SERVICE) python manage.py migrate
+
+test:
+	$(COMPOSE) run --rm -e DJANGO_SETTINGS_MODULE=myauthservice.settings.test $(SERVICE) pytest

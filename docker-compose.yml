@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    container_name: myauthservice_app
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    # NOTE: Ensure a `.env` file exists (e.g. copy from `.env.example`) before running `docker-compose`.
+    env_file:
+      - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: myauthservice.settings.dev
+    ports:
+      - "8000:8000"
+    stdin_open: true
+    tty: true
