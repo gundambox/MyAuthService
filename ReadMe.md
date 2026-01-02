@@ -1,5 +1,7 @@
 # Read Me
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Introduction
 
 This project is a bootstrap/scaffolding setup for a Django authentication service. It is primarily a personal side project built to learn OAuth 2.0 by implementing an OAuth 2.0 authorization server step by step, and to document the design decisions and trade-offs along the way.
@@ -190,3 +192,7 @@ The API is accessible under the `/api/` prefix.
 ### API Documentation
 
 Explore the API docs in Swagger UI at **`/swagger`**. The raw OpenAPI schema is available at **`/schema`**, and it automatically includes existing endpoints like `/api/health` and `/api/version`.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
