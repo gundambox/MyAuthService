@@ -1,0 +1,115 @@
+name: Bug Report
+description: Report a bug or issue to track and fix it
+title: "[Bug] "
+labels: ["bug"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug Report Template
+        Use this template to report and track bugs or issues in the project.
+
+        > **Note:** This is a solo project. This template serves as a personal tool for documenting and tracking bugs.
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Describe the environment where the bug occurs
+      placeholder: |
+        - OS: Ubuntu 22.04
+        - Python version: 3.12
+        - Django version: 5.0
+        - Browser (if applicable): Chrome 120
+        - Docker version: 24.0
+        - Any other relevant environment details
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Provide detailed steps to reproduce the bug
+      placeholder: |
+        1. Start the application with `make up`
+        2. Navigate to http://localhost:8000/api/endpoint
+        3. Send POST request with payload: {...}
+        4. Observe the error
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: Describe what you expected to happen
+      placeholder: The endpoint should return a 200 status code with the expected JSON response
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: Describe what actually happened
+      placeholder: |
+        The endpoint returns a 500 Internal Server Error with the following message:
+        ```
+        Error message here
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs
+      description: Include any relevant error logs, stack traces, or console output
+      placeholder: |
+        ```
+        Paste error logs here
+        ```
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Add screenshots if applicable
+      placeholder: Drag and drop screenshots here
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any other context, workarounds, or related issues
+      placeholder: |
+        - This bug appeared after commit abc123
+        - Workaround: Using X instead of Y
+        - Related to #42
+    validations:
+      required: false
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this bug?
+      options:
+        - Critical - Blocks all work
+        - High - Significant impact on functionality
+        - Medium - Noticeable issue but has workaround
+        - Low - Minor inconvenience
+    validations:
+      required: true

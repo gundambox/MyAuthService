@@ -1,0 +1,77 @@
+name: Task
+description: Create a task to track specific work items or implementation details
+title: "[Task] "
+labels: ["task"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Task Template
+        Use this template to create a task for tracking specific work items, implementation details, or technical work.
+
+        > **Note:** This is a solo project. This template serves as a personal tool for organizing and tracking development tasks.
+
+  - type: textarea
+    id: background
+    attributes:
+      label: Background
+      description: Provide context and background for this task
+      placeholder: |
+        - What is this task about?
+        - Why does this task need to be done?
+        - Any relevant context or prerequisites
+    validations:
+      required: true
+
+  - type: textarea
+    id: todo
+    attributes:
+      label: Todo
+      description: List the specific items that need to be completed for this task
+      placeholder: |
+        - [ ] Todo item 1
+        - [ ] Todo item 2
+        - [ ] Todo item 3
+      value: |
+        - [ ]
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Define the conditions that must be met for this task to be considered complete
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+      value: |
+        - [ ]
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical_notes
+    attributes:
+      label: Technical Notes
+      description: Any technical considerations, implementation notes, or architectural decisions
+      placeholder: |
+        - Implementation approach
+        - Design decisions
+        - Technical constraints or considerations
+    validations:
+      required: false
+
+  - type: textarea
+    id: related_issues
+    attributes:
+      label: Related Issues
+      description: Link to related issues, user stories, or dependencies
+      placeholder: |
+        - Related to #42
+        - Depends on #38
+    validations:
+      required: false

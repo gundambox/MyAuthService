@@ -1,0 +1,73 @@
+name: User Story
+description: Create a user story to describe a new feature from the user's perspective
+title: "[UserStory] "
+labels: ["user-story"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## User Story Template
+        Use this template to create a user story that describes a feature from the user's perspective.
+
+        > **Note:** This is a solo project. This template serves as a personal tool for capturing and organizing feature requirements.
+
+  - type: textarea
+    id: story
+    attributes:
+      label: Story
+      description: Describe the user story in the format "As a [type of user], I want [goal] so that [benefit]"
+      placeholder: |
+        As a [type of user],
+        I want [goal/desire],
+        So that [benefit/value].
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Provide background information and context for this user story
+      placeholder: |
+        - Why is this feature needed?
+        - What problem does it solve?
+        - Any relevant background information
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Define the scope and boundaries of this user story
+      placeholder: |
+        - What is included in this user story?
+        - What is explicitly excluded?
+        - Dependencies or prerequisites
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: List the conditions that must be met for this user story to be considered complete
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+      value: |
+        - [ ]
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_notes
+    attributes:
+      label: Additional Notes
+      description: Any other relevant information, considerations, or links
+      placeholder: Optional notes, screenshots, or references
+    validations:
+      required: false
