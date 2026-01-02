@@ -429,7 +429,7 @@ import pytest
 from django.urls import reverse
 
 
-@pytest.mark. django_db
+@pytest.mark.django_db
 def test_health_check(api_client):
     """Test the health check endpoint returns 200 OK."""
     url = reverse("health-check")
