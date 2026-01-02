@@ -1,6 +1,6 @@
-# Contributing to MyAuthService
+# Development Workflow Guide
 
-Thank you for your interest in contributing to MyAuthService! This document provides guidelines and instructions for contributing to the project.
+> **Note:** This is a solo project and contributions are not accepted at this time. This document serves as a personal reference for development workflow, coding standards, and submission guidelines.
 
 ## Table of Contents
 
@@ -18,14 +18,14 @@ Thank you for your interest in contributing to MyAuthService! This document prov
 
 ## Development Workflow (GitHub Flow)
 
-We follow **GitHub Flow**, a lightweight, branch-based workflow:
+This project follows **GitHub Flow**, a lightweight, branch-based workflow:
 
 1. **Main branch (`main`) is always deployable** - The `main` branch should always be in a working state.
 2. **Create a feature branch** - All work happens in feature branches created from `main`.
-3. **Commit your changes** - Make commits with clear, descriptive messages.
-4. **Open a Pull Request (PR)** - Open a PR early for discussion and feedback.
-5. **Review and discuss** - Collaborate on the PR with reviews and discussions.
-6. **Merge after approval** - Once approved and tests pass, merge into `main`.
+3. **Commit changes** - Make commits with clear, descriptive messages.
+4. **Open a Pull Request (PR)** - Open a PR to track changes and maintain history.
+5. **Review and test** - Verify changes pass all tests and meet quality standards.
+6. **Merge to main** - Once tests pass and changes are verified, merge into `main`.
 7. **Delete the feature branch** - Clean up by deleting the merged branch.
 
 ---
@@ -40,10 +40,10 @@ We follow **GitHub Flow**, a lightweight, branch-based workflow:
 
 ### Initial Setup
 
-1. **Fork and clone the repository:**
+1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/<your-username>/MyAuthService. git
+   git clone https://github.com/gundambox/MyAuthService.git
    cd MyAuthService
    ```
 
@@ -298,17 +298,15 @@ Related: #45, #47, #52
 
 ### Opening a PR
 
-1. **Push your branch** to your fork on GitHub.
+1. **Push your branch** to GitHub.
 
-2. **Open a Pull Request** from your fork to the main repository's `main` branch.
+2. **Open a Pull Request** to the `main` branch.
 
-3. **Fill out the PR template** (if available) with:
+3. **Fill out the PR description** with:
    - Description of changes
    - Related issue numbers (e.g., "Related to #42" or use "Closes #42" to auto-close when PR merges)
    - Testing steps
    - Screenshots (if applicable)
-
-4. **Request a review** from maintainers or other contributors.
 
 ### PR Title Format
 
@@ -323,24 +321,19 @@ Use a clear, descriptive title that follows the commit message format:
 - `fix: resolve 500 error on invalid auth code`
 - `docs: add contribution guidelines`
 
-### During Review
+### Review and Merge
 
-- Respond to feedback promptly and professionally
-- Make requested changes in new commits
-- Push updates to the same branch (the PR will update automatically)
-- Re-request review after addressing feedback
-
-### After Approval
-
-- Maintainers will merge your PR
-- Your feature branch will be deleted
-- Your contribution will be part of the next release!  🎉
+- Verify all tests pass in CI
+- Review changes one final time
+- Ensure all checklist items are complete
+- Merge the PR
+- Delete the feature branch after merge
 
 ---
 
 ## Code Style
 
-We use `black` for code formatting and `flake8` for linting to maintain consistent code style.
+This project uses `black` for code formatting and `flake8` for linting to maintain consistent code style.
 
 ### Black (Code Formatting)
 
@@ -386,7 +379,7 @@ flake8 .
 
 ## Testing
 
-We use `pytest` with `pytest-django` for testing.
+This project uses `pytest` with `pytest-django` for testing.
 
 ### Running Tests
 
@@ -450,7 +443,7 @@ def test_health_check(api_client):
 
 ## Docker and Makefile Commands
 
-We use Docker Compose for containerization and a Makefile for common commands.
+This project uses Docker Compose for containerization and a Makefile for common commands.
 
 ### Makefile Commands
 
@@ -520,10 +513,12 @@ docker compose run --rm app <cmd>    # Run one-off command
 
 ---
 
-## Questions or Issues?
+## Issue Tracking
 
-- **Found a bug?** Open an issue with the `[Bug]` label
-- **Have a question?** Open a discussion or issue with the `[Question]` label
-- **Need help?** Reach out to maintainers in the issue or PR
+- **Bug found?** Open an issue with the `[Bug]` label to track it
+- **Feature idea?** Create an issue with the `[Feature]` label for future reference
+- **Question or note?** Use issues with the `[Question]` label as documentation
 
-Thank you for contributing to MyAuthService! 🚀
+---
+
+This guide serves as a reference for maintaining consistent development practices throughout the project lifecycle.
