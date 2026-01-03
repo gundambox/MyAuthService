@@ -1,198 +1,250 @@
-# Read Me
+# MyAuthService
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Introduction
+## Overview
 
-This project is a bootstrap/scaffolding setup for a Django authentication service. It is primarily a personal side project built to learn OAuth 2.0 by implementing an OAuth 2.0 authorization server step by step, and to document the design decisions and trade-offs along the way.
+MyAuthService is a Django-based OAuth 2.0 authorization server built for learning and experimentation. This project serves as a practice implementation of OAuth 2.0 protocols, focusing on proper architecture, testing practices, and documentation.
 
-The repository currently focuses on establishing a solid development foundation (project structure, settings split, local workflow). OAuth 2.0 functionality and related endpoints will be introduced incrementally in future PRs.
+**Current Status:** Bootstrap/scaffolding phase. OAuth 2.0 endpoints and functionality will be introduced incrementally in future releases.
 
-## Requirements
+## Technology Stack
 
 - Python 3.12+
-- [`pip`](https://pip.pypa.io/en/stable/) for dependency management
-- pkg-config
-- libmysqlclient-dev
+- Django 6.0+
+- Django REST Framework
+- MySQL (production) / SQLite (development)
+- Docker & Docker Compose
+- pytest for testing
 
-## Installation
+## Prerequisites
+
+- Docker
+- Docker Compose
+- Git
+
+## Development Setup
+
+### 1. Clone Repository
 
 ```bash
-pip install -r requirements.txt
+git clone https://github.com/gundambox/MyAuthService.git
+cd MyAuthService
 ```
 
-## Local Development
-
-### Start (one command)
-
-```bash
-make dev
-```
-
-### What it does
-
-- Create venv at `.venv/`
-- Install dependencies from `requirements.txt`
-- Run `python manage.py migrate`
-- Start Django dev server at `http://localhost:8000`
-
-## Environment Variables
-
-Local development uses a .env file (not committed). Copy .env.example to .env and set required variables.
-
-### Required
-
-- `SECRET_KEY`: A long, random string for Django's secret key.
-
-Example:
+### 2. Configure Environment Variables
 
 ```bash
 cp .env.example .env
-# edit .env and set SECRET_KEY
-SECRET_KEY=your-long-random-secret
 ```
 
-> **Notes:**
-> - `.env` is for local development only.
-> - In production, do not rely on `.env`; inject environment variables via your deployment platform.
+Edit `.env` and set required variables:
 
-## Settings (dev / prod / test)
-
-Settings are split into modules under `myauthservice/settings/`:
-
-* `base.py`: common settings
-* `dev.py`: development settings (console logging)
-* `prod.py`: production settings (should be strict / fail-fast)
-* `test.py`: test settings (isolated + faster)
-
-### Run with specific settings
-
-You can specify which settings module to use in two ways:
-
-1. **By setting the `DJANGO_SETTINGS_MODULE` environment variable (this overrides the default in `manage.py`):**
-
-    ```bash
-    # Run server with dev settings
-    DJANGO_SETTINGS_MODULE=myauthservice.settings.dev python manage.py runserver
-
-    # Run tests with test settings
-    DJANGO_SETTINGS_MODULE=myauthservice.settings.test python manage.py test
-    ```
-2. **By using the `--settings` command-line option with `manage.py` commands:**
-    ```bash
-    # Run server with dev settings
-    python manage.py runserver --settings=myauthservice.settings.dev
-
-    # Run tests with test settings
-    python manage.py test --settings=myauthservice.settings.test
-    ```
-
-## Running Tests
-- To run tests:
-  ```bash
-  pytest tests/
-  ```
-
-## Linting and Formatting
-- To run lint checks:
-  ```bash
-  flake8 .
-  ```
-- To auto-format code:
-  ```bash
-  black .
-  ```
-
-## Logging
-
-* Development logging writes to console (stdout).
-* Production/staging should prefer stdout logging and let the platform collect logs.
-
-## Project structure
-
-This repository contains a Django + Django REST Framework project scaffold for an OAuth 2.0 authorization server. OAuth 2.0 functionality is planned for future PRs.
-
-```text
-.
-├── ReadMe.md
-├── manage.py               # Django management script
-├── myauthservice           # Django project directory
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings
-│   │   ├── __init__.py
-│   │   ├── base.py         # common settings
-│   │   ├── dev.py          # development settings
-│   │   ├── prod.py         # production settings
-│   │   └── test.py         # testing settings
-│   ├── urls.py
-│   └── wsgi.py
-├── oauth2                  # Django app for OAuth 2.0 implementation
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── migrations
-│   │   └── __init__.py
-│   ├── models.py
-│   ├── serializers.py
-│   ├── tests.py
-│   └── views.py
-├── requirements.txt        # Project dependencies
-└── tests                   # Test suite
-    ├── __init__.py
-    └── test_smoke.py
+```bash
+SECRET_KEY=your-long-random-secret-key-here
 ```
+
+Generate a secure `SECRET_KEY`:
+
+```bash
+python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+```
+
+### 3. Build and Start Services
+
+```bash
+make build
+make up
+```
+
+### 4. Run Migrations
+
+```bash
+make migrate
+```
+
+### 5. Verify Installation
+
+```bash
+make test
+```
+
+The application will be available at `http://localhost:8000`
+
+## Common Commands
+
+### Container Management
+
+```bash
+make up         # Start services
+make down       # Stop services
+make down-v     # Stop services and remove volumes (reset database)
+make logs       # View container logs
+make shell      # Access container shell
+```
+
+### Database Operations
+
+```bash
+make migrate    # Run database migrations
+```
+
+### Testing
+
+```bash
+make test       # Run all tests
+```
+
+Run specific tests:
+
+```bash
+docker compose run --rm -e DJANGO_SETTINGS_MODULE=myauthservice.settings.test app pytest tests/integration/test_health_endpoint.py
+```
+
+### Code Quality
+
+Format code:
+
+```bash
+make shell
+black .
+exit
+```
+
+Lint code:
+
+```bash
+make shell
+flake8 .
+exit
+```
+
+Or run directly:
+
+```bash
+docker compose exec app black .
+docker compose exec app flake8 .
+```
+
+## Settings Configuration
+
+Settings are split into environment-specific modules under `myauthservice/settings/`:
+
+- `base.py` - Common settings
+- `dev.py` - Development settings (SQLite, debug enabled)
+- `test.py` - Test settings (in-memory SQLite)
+- `prod.py` - Production settings (MySQL, security hardened)
+
+Specify settings module:
+
+```bash
+DJANGO_SETTINGS_MODULE=myauthservice.settings.dev python manage.py runserver
+```
+
+Or:
+
+```bash
+python manage.py runserver --settings=myauthservice.settings.dev
+```
+
+## API Endpoints
+
+### API Documentation
+
+- Swagger UI: `http://localhost:8000/swagger/`
+- ReDoc: `http://localhost:8000/redoc/`
+- OpenAPI Schema: `http://localhost:8000/schema/`
 
 ## Versioning
 
-The service version is controlled by a `VERSION` file at the project root. The version endpoint (`GET /api/version`) reads from this file.
+Service version is managed via the `VERSION` file in the project root.
 
 ### Version Format
 
-The project follows semantic versioning (`major.minor.patch`):
+Semantic versioning: `major.minor.patch`
 
 | Change Type | Version Update | Reset |
 |-------------|----------------|-------|
-| Breaking change / Delete feature | `major + 1` | `minor = 0`, `patch = 0` |
-| Add feature | `minor + 1` | `patch = 0` |
-| Documentation, chore, bug fix | `patch + 1` | - |
+| Breaking change / Feature removal | `major + 1` | `minor = 0`, `patch = 0` |
+| New feature | `minor + 1` | `patch = 0` |
+| Bug fix / Documentation / Chore | `patch + 1` | - |
 
 ### Examples
 
 - `0.1.0` → `1.0.0` (breaking change)
 - `0.1.0` → `0.2.0` (new feature)
-- `0.1.0` → `0.1.1` (bug fix or documentation)
+- `0.1.0` → `0.1.1` (bug fix)
 
-### How It Works
+### Version Endpoint
 
-The version is read in Django settings (`myauthservice/settings/base.py`):
-
-```python
-# Read version from VERSION file
-VERSION_FILE = BASE_DIR / "VERSION"
-if VERSION_FILE. exists():
-    SERVICE_VERSION = VERSION_FILE.read_text().strip()
-else:
-    SERVICE_VERSION = "0.0.0"  # fallback if VERSION file is missing
+```bash
+curl http://localhost:8000/api/version/
 ```
 
-The version endpoint returns:
+Response:
 
 ```json
 {
   "service": "MyAuthService",
-  "version": "x.x.x"
+  "version": "0.1.2"
 }
 ```
 
-## API Endpoints
+## Project Structure
 
-The API is accessible under the `/api/` prefix.
+```
+.
+├── myauthservice/          # Django project
+│   ├── settings/           # Environment-specific settings
+│   │   ├── base.py
+│   │   ├── dev.py
+│   │   ├── test.py
+│   │   └── prod.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+├── oauth2/                 # OAuth 2.0 app
+│   ├── views.py
+│   ├── urls.py
+│   └── migrations/
+├── tests/                  # Test suite
+│   ├── test_smoke.py
+│   └── integration/
+├── Dockerfile
+├── docker-compose.yml
+├── Makefile
+├── requirements.txt
+└── VERSION
+```
 
-### API Documentation
+## Environment Variables
 
-Explore the API docs in Swagger UI at **`/swagger`**. The raw OpenAPI schema is available at **`/schema`**, and it automatically includes existing endpoints like `/api/health` and `/api/version`.
+### Required
+
+- `SECRET_KEY` - Django secret key (minimum 50 characters)
+
+### Optional
+
+- `DJANGO_LOG_LEVEL` - Logging level (default: INFO)
+- `DEBUG` - Enable debug mode (default: False in production)
+- `ALLOWED_HOSTS` - Comma-separated allowed hosts
+
+### Production Only
+
+- `PROD_DB_NAME` - Database name
+- `PROD_DB_USER` - Database user
+- `PROD_DB_PASSWORD` - Database password
+- `PROD_DB_HOST` - Database host
+- `PROD_DB_PORT` - Database port (default: 3306)
+
+## Contributing
+
+This is a solo learning project. For development workflow and guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Security
+
+For security concerns, see [SECURITY.md](SECURITY.md).
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
