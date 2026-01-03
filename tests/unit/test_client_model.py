@@ -67,18 +67,6 @@ class TestClientModel:
             client.clean()
         assert "redirect_uris" in exc_info.value.error_dict
 
-    def test_clean_public_client_with_secret(self):
-        client = Client(
-            client_id="test_client",
-            client_type="public",
-            client_secret="should_not_have_secret",
-            name="Test Client",
-            redirect_uris=["https://example.com/callback"],
-        )
-        with pytest.raises(ValidationError) as exc_info:
-            client.clean()
-        assert "client_secret" in exc_info.value.error_dict
-
     def test_confidential_client_with_secret(self):
         client = Client(
             client_id="test_client",

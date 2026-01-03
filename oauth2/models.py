@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from .validators import validate_redirect_uris
+from .utils import generate_unique_client_id, generate_client_secret
 
 
 class Client(models.Model):
@@ -28,6 +29,21 @@ class Client(models.Model):
     def __str__(self):
         return f"{self.name} ({self.client_id[:8]}...)"
 
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+
+        if is_new:
+            if not self.client_id:
+                self.client_id = generate_unique_client_id(Client)
+
+            if self.client_type == "confidential" and not self.client_secret:
+                self.client_secret = generate_client_secret()
+
+            if self.client_type == "public":
+                self.client_secret = None
+
+        super().save(*args, **kwargs)
+
     def clean(self):
         super().clean()
         errors = {}
@@ -40,8 +56,13 @@ class Client(models.Model):
             except ValidationError as e:
                 errors["redirect_uris"] = e.message
 
-        if self.client_type == "public" and self.client_secret:
-            errors["client_secret"] = "Public clients must not have a client_secret."
+        if self.client_type == "public":
+            self.client_secret = None
+        elif self.client_type == "confidential" and self.pk is not None:
+            if not self.client_secret:
+                errors["client_secret"] = (
+                    "Confidential clients must have a client_secret."
+                )
 
         if errors:
             raise ValidationError(errors)
