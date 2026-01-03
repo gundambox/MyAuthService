@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from .validators import validate_redirect_uris
 
 
 class Client(models.Model):
@@ -27,13 +28,34 @@ class Client(models.Model):
     def __str__(self):
         return f"{self.name} ({self.client_id[:8]}...)"
 
-    def is_valid(self):
+    def clean(self):
+        super().clean()
+        errors = {}
+
         if not self.redirect_uris or len(self.redirect_uris) == 0:
-            raise ValidationError(
-                {"redirect_uris": "At least one redirect URI is required."}
-            )
+            errors["redirect_uris"] = "At least one redirect URI is required."
+        else:
+            try:
+                validate_redirect_uris(self.redirect_uris)
+            except ValidationError as e:
+                errors["redirect_uris"] = e.message
 
         if self.client_type == "public" and self.client_secret:
-            raise ValidationError(
-                {"client_secret": "Public clients must not have a client_secret."}
-            )
+            errors["client_secret"] = "Public clients must not have a client_secret."
+
+        if errors:
+            raise ValidationError(errors)
+
+    def is_valid_redirect_uri(self, uri):
+        return uri in self.redirect_uris
+
+    def get_redirect_uri(self, uri=None):
+        if uri is not None:
+            if self.is_valid_redirect_uri(uri):
+                return uri
+            return None
+
+        if len(self.redirect_uris) == 1:
+            return self.redirect_uris[0]
+
+        return None
