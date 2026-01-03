@@ -64,7 +64,7 @@ class TestClientModel:
             redirect_uris=[],
         )
         with pytest.raises(ValidationError) as exc_info:
-            client.is_valid()
+            client.clean()
         assert "redirect_uris" in exc_info.value.error_dict
 
     def test_clean_public_client_with_secret(self):
@@ -76,7 +76,7 @@ class TestClientModel:
             redirect_uris=["https://example.com/callback"],
         )
         with pytest.raises(ValidationError) as exc_info:
-            client.is_valid()
+            client.clean()
         assert "client_secret" in exc_info.value.error_dict
 
     def test_confidential_client_with_secret(self):
@@ -87,7 +87,7 @@ class TestClientModel:
             name="Test Client",
             redirect_uris=["https://example.com/callback"],
         )
-        client.is_valid()
+        client.clean()
 
     def test_multiple_redirect_uris(self):
         client = Client.objects.create(
