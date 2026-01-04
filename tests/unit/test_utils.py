@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 from oauth2.utils import (
     generate_client_id,
     generate_client_secret,
