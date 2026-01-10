@@ -117,6 +117,7 @@ class TestClientModel:
         assert clients[0].client_id == "client2"
         assert clients[1].client_id == "client1"
 
+
 @pytest.mark.django_db
 class TestClientModelFields:
     """Tests for Client model field definitions and constraints.
