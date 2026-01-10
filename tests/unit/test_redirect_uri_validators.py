@@ -73,6 +73,31 @@ class TestValidateRedirectUri:
             validate_redirect_uri(None)
         assert "must be a non-empty string" in str(exc_info.value)
 
+    # New tests for host validation
+    def test_invalid_https_without_host(self):
+        """Verify HTTPS URI without host is rejected (RFC 6749 compliance)."""
+        with pytest.raises(ValidationError) as exc_info:
+            validate_redirect_uri("https:///callback")
+        assert "must include a host" in str(exc_info.value)
+
+    def test_invalid_https_empty_authority(self):
+        """Verify HTTPS URI with empty authority is rejected."""
+        with pytest.raises(ValidationError) as exc_info:
+            validate_redirect_uri("https:///")
+        assert "must include a host" in str(exc_info.value)
+
+    def test_invalid_http_without_host(self):
+        """Verify HTTP URI without host is rejected."""
+        with pytest.raises(ValidationError) as exc_info:
+            validate_redirect_uri("http:///callback")
+        assert "must include a host" in str(exc_info.value)
+
+    def test_invalid_http_empty_authority(self):
+        """Verify HTTP URI with empty authority is rejected."""
+        with pytest.raises(ValidationError) as exc_info:
+            validate_redirect_uri("http:///")
+        assert "must include a host" in str(exc_info.value)
+
 
 class TestValidateRedirectUris:
     def test_valid_single_uri(self):
@@ -129,3 +154,14 @@ class TestValidateRedirectUris:
             "myapp://callback",
         ]
         assert validate_redirect_uris(uris) == uris
+
+    # New tests for host validation in list
+    def test_invalid_https_without_host_in_list(self):
+        """Verify HTTPS URI without host in list is rejected."""
+        uris = [
+            "https://example.com/callback",
+            "https:///callback",
+        ]
+        with pytest.raises(ValidationError) as exc_info:
+            validate_redirect_uris(uris)
+        assert "must include a host" in str(exc_info.value)

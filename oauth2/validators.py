@@ -22,8 +22,16 @@ def validate_redirect_uri(uri):
     netloc = parsed.netloc.lower()
 
     if scheme == "https":
+        if not netloc:
+            raise ValidationError(
+                f"HTTPS redirect URI must include a host: {uri}"
+            )
         return uri
     elif scheme == "http":
+        if not netloc:
+            raise ValidationError(
+                f"HTTP redirect URI must include a host: {uri}"
+            )
         if netloc in ["localhost", "127.0.0.1", "[::1]"] or netloc.startswith(
             "localhost:"
         ):
