@@ -143,9 +143,7 @@ class ClientAdmin(admin.ModelAdmin):
                 display_secret
             )
 
-        return super().render_change_form(
-            request, context, add, change, form_url, obj
-        )
+        return super().render_change_form(request, context, add, change, form_url, obj)
 
     def deactivate_clients(self, request, queryset):
         updated = queryset.update(is_active=False)
