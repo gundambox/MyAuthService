@@ -1,0 +1,22 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+
+{% block after_field_sets %}
+{{ block.super }}
+
+{% if client_secret_html %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Find the client_secret_display field row and replace its content
+        var fieldRow = document.querySelector('.field-client_secret_display');
+        if (fieldRow) {
+            var readonlyDiv = fieldRow.querySelector('.readonly');
+            if (readonlyDiv) {
+                readonlyDiv.innerHTML = '{{ client_secret_html|escapejs }}';
+            }
+        }
+    });
+</script>
+{% endif %}
+
+{% endblock %}
