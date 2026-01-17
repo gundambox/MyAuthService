@@ -28,9 +28,12 @@ def validate_redirect_uri(uri):
     elif scheme == "http":
         if not netloc:
             raise ValidationError(f"HTTP redirect URI must include a host: {uri}")
-        if netloc in ["localhost", "127.0.0.1", "[::1]"] or netloc.startswith(
-            "localhost:"
-        ):
+        # Extract host without port for loopback check
+        # parsed.hostname handles both "host:port" and "[ipv6]:port" formats
+        hostname = parsed.hostname.lower() if parsed.hostname else ""
+
+        # RFC 8252: Allow loopback addresses (localhost, 127.0.0.1, ::1) with any port
+        if hostname in ["localhost", "127.0.0.1", "::1"]:
             return uri
         else:
             raise ValidationError(
